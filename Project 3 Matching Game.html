@@ -1,0 +1,86 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>Assignment 3 Matching Game</title>
+    <script>
+      var numberOfFaces = 5;
+
+      function generateFace(left, top, side, final) {
+        var Face = document.createElement("IMG");
+        Face.src = "http://home.cse.ust.hk/~rossiter/mooc/matching_game/smile.png";
+        Face.style.left = left;
+        Face.style.top = top;
+        if (final != true) {
+          Face.onclick =
+          function nextlevel(event){
+            alert("Game Over!");
+          };
+        }
+        else {
+          Face.onclick =
+          function nextlevel2(event){
+            var  LeftSide =document.getElementById("LeftSide");
+            while (LeftSide.firstChild)
+              LeftSide.removeChild(LeftSide.firstChild);
+            var  RightSide =document.getElementById("RightSide");
+            while (RightSide.firstChild)
+              RightSide.removeChild(RightSide.firstChild);
+            numberOfFaces=numberOfFaces + 5;
+            setupfaces(numberOfFaces);
+          };
+        }
+        document.getElementById(side).appendChild(Face);
+      }
+
+      function generaterandomface(final) {
+        var left = Math.floor(Math.random()*400)+"px";
+        var top = Math.floor(Math.random()*400)+"px";
+        if(final == true) {
+          generateFace(left, top, "LeftSide", true);
+        }
+        else {
+          generateFace(left, top, "LeftSide", false);
+          generateFace(left, top, "RightSide", false);
+        }
+      }
+
+      function setup() {
+          setupfaces(5);
+      }
+
+      function setupfaces(numberofFaces) {
+        for(var i=0; i<numberofFaces; i++){
+          if(i==numberofFaces - 1)
+            generaterandomface(true);
+          else
+            generaterandomface(false);
+        }
+      }
+    </script>
+    <style>
+      #LeftSide {
+        position:absolute;
+        width: 500px;
+        height: 500px;
+      }
+      #RightSide {
+        position:absolute;
+        left: 500px;
+        width:500px;
+        height: 500px;
+        border-left: solid 1px black;
+      }
+      img {
+        position:absolute;
+      }
+    </style>
+  </head>
+  <body onload="setup()">
+    <h1>Matching Game</h1>
+    <p>Click on the extra smiling face on the left</p>
+    <div id="LeftSide">
+    </div>
+    <div id="RightSide">
+    </div>
+  </body>
+</html>
